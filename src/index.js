@@ -1,17 +1,13 @@
 import React from "react";
-import { ApolloProvider } from "react-apollo";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { client } from "./api/StoreApi";
-import App from "./App";
 import store from "./api/store";
+import App from "./App";
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ApolloProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

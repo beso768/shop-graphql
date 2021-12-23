@@ -13,14 +13,10 @@ export const CategoriesSlice = createSlice({
   name: "categories",
   initialState: {
     categories: [],
-    activeCategory: "",
+    activeCategory: "all",
     status: "",
   },
   reducers: {
-    pushCategory: (state, action) => {
-      state.categories.push(action.payload);
-    },
-
     setActiveCategory: (state, action) => {
       return {
         ...state,
@@ -52,5 +48,5 @@ export const CategoriesSlice = createSlice({
   },
 });
 
-export const { pushCategory, setActiveCategory } = CategoriesSlice.actions;
+export const { setActiveCategory, activeCategory } = CategoriesSlice.actions;
 export const CategoriesReducer = CategoriesSlice.reducer;

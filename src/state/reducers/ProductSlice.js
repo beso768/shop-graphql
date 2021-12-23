@@ -1,40 +1,40 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ApifetchProductsByCategory } from "../../api/StoreApi";
+import { ApifetchProductById } from "./../../api/StoreApi";
 
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async (category) => {
-    const res = await ApifetchProductsByCategory(category);
+export const fetchProductById = createAsyncThunk(
+  "product/fetchProductById",
+  async (id) => {
+    const res = await ApifetchProductById(id);
     return res;
   }
 );
 
-export const ProductsSlice = createSlice({
-  name: "products",
+export const ProductSlice = createSlice({
+  name: "product",
   initialState: {
-    products: [],
+    product: {},
     status: "",
   },
   extraReducers(builder) {
-    builder.addCase(fetchProducts.pending, () => {
+    builder.addCase(fetchProductById.pending, (state) => {
       return {
-        products: [],
+        ...state,
         status: "loading",
       };
     });
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+    builder.addCase(fetchProductById.fulfilled, (state, action) => {
       return {
-        products: action.payload.data.category.products,
         status: "success",
+        product: action.payload.data.product,
       };
     });
-    builder.addCase(fetchProducts.rejected, () => {
+    builder.addCase(fetchProductById.rejected, () => {
       return {
-        products: [],
         status: "error",
+        product: {},
       };
     });
   },
 });
 
-export const ProductsReducer = ProductsSlice.reducer;
+export const ProductReducer = ProductSlice.reducer;

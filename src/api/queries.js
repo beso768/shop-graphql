@@ -38,7 +38,10 @@ export const FETCH_PRODUCTS_BY_CATEGORY = gql`
 
 export const FETCH_CURRENCIES = gql`
   query FetchCurrencies {
-    currencies
+    currencies {
+      label
+      symbol
+    }
   }
 `;
 
@@ -63,6 +66,10 @@ export const FETCH_PRODUCT_BY_ID = gql`
       }
       prices {
         amount
+        currency {
+          label
+          symbol
+        }
       }
     }
   }

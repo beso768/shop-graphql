@@ -1,57 +1,67 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Cart from "../src/components/pages/Cart";
 import ProductDescription from "../src/components/pages/ProductDescription";
 import ProductList from "../src/components/pages/ProductList";
 import { ApifetchProductsByCategory } from "./api/StoreApi";
 import Header from "./components/Header";
+import { connect } from "react-redux";
+import { fetchCategories } from "./state/reducers/CategoriesSlice";
+import { fetchCurrencies } from "./state/reducers/CurrencySlice";
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-    };
-    this.changeCategory = this.changeCategory.bind(this);
-  }
+const mapStateToProps = (state) => {
+  return {
+    // currencies: state.CurrencyReducer.currencies,
+    categories: state.CategoriesReducer.categories,
+    activeCategory: state.CategoriesReducer.activeCategory,
+    // activeCurrency: state.CurrencyReducer.activeCurrency,
+  };
+};
 
-  changeCategory(category) {
-    ApifetchProductsByCategory(category).then((data) =>
-      this.setState({ data: data })
-    );
-  }
+const mapDispatchToProps = {
+  fetchCategories,
+  // fetchProducts,
+  fetchCurrencies,
+  // setActiveCurrency,
+};
+
+class App extends Component {
   componentDidMount() {
-    ApifetchProductsByCategory("all").then((data) =>
-      this.setState({ data: data })
-    );
+    this.props.fetchCurrencies();
+    this.props.fetchCategories();
   }
 
-  display() {
-    let data = this.props.data;
-    if (data.loading) {
-      return <h1>Loading...</h1>;
-    } else {
-      return (
-        <ul>
-          {data.category.products.map((item) => (
-            <li>{item.name}</li>
-          ))}
-        </ul>
-      );
-    }
-  }
+  // display() {
+  //   let data = this.props.data;
+  //   if (data.loading) {
+  //     return <h1>Loading...</h1>;
+  //   } else {
+  //     return (
+  //       <ul>
+  //         {data.category.products.map((item) => (
+  //           <li>{item.name}</li>
+  //         ))}
+  //       </ul>
+  //     );
+  //   }
+  // }
 
   render() {
     return (
       <Router>
-        <Header changeCategory={this.changeCategory} />
-        <ProductList />
-        <Routes>
-          <Route path="/" element={<ProductList data={this.state.data} />} />
-          <Route path="/product/:id" element={<ProductDescription />} />
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <ProductList />
+          </Route>
+          <Route exact path="/product/:id">
+            <ProductDescription />
+          </Route>
+
           <Route path="/cart" element={<Cart />} />
-        </Routes>
+        </Switch>
       </Router>
     );
   }
 }
+export default connect(mapStateToProps, mapDispatchToProps)(App);
