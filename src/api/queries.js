@@ -25,6 +25,7 @@ export const FETCH_PRODUCTS_BY_CATEGORY = gql`
           items {
             id
             value
+            displayValue
           }
         }
         id

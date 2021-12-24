@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
-import currency from "../icons/currency.png";
-import { setActiveCurrency } from "../state/reducers/CurrencySlice";
-import { fetchCurrencies } from "../state/reducers/CurrencySlice";
+import {
+  fetchCurrencies,
+  setActiveCurrency,
+} from "../state/reducers/CurrencySlice";
+
 const mapStateToProps = (state) => {
   const currency = state.CurrencyReducer;
   return {
@@ -12,39 +14,75 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setActiveCurrency,
+  fetchCurrencies,
 };
 
-class CurrencySwitcher extends Component {
+const currencyBox = createRef();
+
+class CurrencyMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showMenu: false,
     };
     this.operCurrencyMenu = this.operCurrencyMenu.bind(this);
+    this.selectCurrency = this.selectCurrency.bind(this);
+    this.closeHandler = this.closeHandler.bind(this);
   }
 
-  componentDidMount() {
-    fetchCurrencies();
+  closeHandler({ target }) {
+    if (!currencyBox.current.contains(target)) {
+      this.setState({ showMenu: false }, () =>
+        document.removeEventListener("click", this.closeHandler)
+      );
+    }
   }
 
   operCurrencyMenu() {
-    this.setState((prevState) => ({
-      showMenu: !prevState.showMenu,
-    }));
+    this.setState((prevState) => ({ showMenu: !prevState.showMenu }));
+    document.addEventListener("click", this.closeHandler);
   }
+  componentDidMount() {
+    this.props.fetchCurrencies();
+  }
+  selectCurrency(currency) {
+    this.props.setActiveCurrency(currency);
+  }
+
   render() {
     const { showMenu } = this.state;
-    console.log(this.props);
+    const { currencies } = this.props.currency;
+    const { activeCurrency } = this.props.currency;
+
     return (
-      <div className="currency" onClick={this.operCurrencyMenu}>
-        <div>
-          <img src={currency} alt="currency" />
+      <div className="d-flex">
+        <div
+          ref={currencyBox}
+          className="currency"
+          onClick={this.operCurrencyMenu}
+        >
+          <span>{activeCurrency.symbol}</span>
         </div>
-        <div style={showMenu ? { display: "block" } : { display: "none" }}>
-          <h1>dasdasd</h1>
-        </div>
+        {showMenu && (
+          <div className="currency-list">
+            {currencies?.map((currency) => (
+              <div
+                key={currency.symbol}
+                onClick={() =>
+                  this.selectCurrency({
+                    label: currency.label,
+                    symbol: currency.symbol,
+                  })
+                }
+              >
+                {currency.symbol}{" "}
+                <span className="currency-label">{currency.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CurrencySwitcher);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencyMenu);

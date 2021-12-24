@@ -7,7 +7,7 @@ import "../App.css";
 import { connect } from "react-redux";
 import { setActiveCategory } from "../state/reducers/CategoriesSlice";
 import { fetchProducts } from "../state/reducers/ProductsSlice";
-import CurrencySwitcher from "./CurrencyMenu";
+import CurrencyMenu from "./CurrencyMenu";
 
 const mapStateToProps = (state) => {
   const categories = state.CategoriesReducer.categories;
@@ -60,7 +60,7 @@ class Header extends Component {
           </NavLink>
         </div>
         <div className="d-flex">
-          <CurrencySwitcher />
+          <CurrencyMenu />
           <div className="cart">
             <NavLink to="/cart">
               <img src={cart} alt="cart" />

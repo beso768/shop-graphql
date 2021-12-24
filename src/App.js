@@ -8,7 +8,7 @@ import Header from "./components/Header";
 import { connect } from "react-redux";
 import { fetchCategories } from "./state/reducers/CategoriesSlice";
 import { fetchCurrencies } from "./state/reducers/CurrencySlice";
-
+import { setActiveCurrency } from "./state/reducers/CurrencySlice";
 const mapStateToProps = (state) => {
   return {
     // currencies: state.CurrencyReducer.currencies,
@@ -22,12 +22,11 @@ const mapDispatchToProps = {
   fetchCategories,
   // fetchProducts,
   fetchCurrencies,
-  // setActiveCurrency,
+  setActiveCurrency,
 };
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchCurrencies();
     this.props.fetchCategories();
   }
 

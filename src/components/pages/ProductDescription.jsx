@@ -29,7 +29,6 @@ class ProductDescription extends Component {
     const currentLabel = "USD";
     if (prices) {
       const price = prices.find((item) => item.currency.label === currentLabel);
-      console.log(price);
     }
   }
   componentDidMount() {
