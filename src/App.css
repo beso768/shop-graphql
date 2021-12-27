@@ -110,7 +110,7 @@ ul {
 #root {
   max-width: 1440px;
   margin: auto;
-  padding: 20px 3%;
+  padding: 0 3% 20px 3%;
 }
 .d-flex {
   display: flex;
@@ -118,16 +118,22 @@ ul {
 .justify-between {
   justify-content: space-between;
 }
+.page-title {
+  font-size: 37px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 4% 0px;
+}
 
 /* header  */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 2% 0;
 }
-li.active a {
-  color: #5ece7b;
-}
+
 li a {
   font-family: "Raleway", sans-serif;
   margin-right: 20px;
@@ -135,9 +141,149 @@ li a {
   font-weight: 600;
   text-transform: capitalize;
 }
+/* cart  */
+.menu-icons {
+  position: relative;
+}
 .cart {
   margin: 1px 0 0 20px;
 }
+.cart-menu {
+  position: absolute;
+  right: 0;
+  top: 46px;
+  box-shadow: 0px 0px 5px 1px #ffffff6e;
+  background: white;
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  z-index: 11;
+}
+.cart-backdrop {
+  position: fixed;
+  backdrop-filter: brightness(0.7);
+  width: 100%;
+  height: 100vh;
+  left: 0;
+  top: 85px;
+  z-index: 10;
+}
+.item-wrapper {
+  display: flex;
+}
+.menu-item-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 39px;
+}
+.menu-item-wrapper .attribute span {
+  font-size: 11px !important;
+}
+.img-wrapper {
+  width: 105px;
+  height: 100%;
+  object-fit: cover;
+  margin-left: 15px;
+}
+.attribute h5 {
+  text-transform: uppercase;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.display-value.menu {
+  width: 24px !important;
+  height: 24px !important;
+  margin-right: 10px;
+}
+.page-quantity,
+.menu-quantity {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+.menu-quantity button,
+.page-quantity button {
+  background: white;
+  border: 1px solid #1d1f22;
+  cursor: pointer;
+  font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page-quantity button {
+  width: 45px;
+  height: 45px;
+}
+.menu-quantity button {
+  width: 24px;
+  height: 24px;
+}
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #dbdbdb;
+  padding: 2% 0;
+}
+.cart-slider-wrapper {
+  position: relative;
+  margin-left: 20px;
+  width: 160px;
+  height: 100%;
+}
+.cart-slider-wrapper button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  background: none;
+  border: none;
+  filter: drop-shadow(2px 4px 6px black);
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+.attribute {
+  margin-top: 7%;
+}
+.cart-slider-wrapper button:nth-child(1) {
+  left: 10px;
+  right: unset;
+}
+.right {
+  display: flex;
+  height: 180px;
+}
+
+.left h3 {
+  font-size: 30px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  margin: 1% 0px;
+}
+.left h4 {
+  font-size: 20px;
+  font-weight: revert;
+  font-family: "Raleway", sans-serif;
+  margin-bottom: 7%;
+}
+.left.menu-item h3,
+.left.menu-item h4 {
+  font-size: 15px;
+}
+.right-menu-item {
+  display: flex;
+  height: 110px;
+}
+
 /* products */
 .product-list {
   display: flex;
@@ -150,8 +296,6 @@ li a {
   font-size: 42px;
   font-weight: 600;
   text-transform: capitalize;
-}
-.product-box {
 }
 .product-image {
   width: 300px;
@@ -190,25 +334,31 @@ li a {
 /* currency  */
 .currency-list {
   position: absolute;
-  top: 63px;
-  right: 19px;
+  top: 35px;
+  right: 0;
   box-shadow: 0px 0px 5px 1px #a6a6a6;
   background: white;
   padding: 7px 0;
   display: flex;
   flex-direction: column;
+  z-index: 10;
+  width: max-content;
 }
 .currency,
 .currency-list div {
   font-family: "Raleway", sans-serif;
   font-size: 20px;
   font-weight: bold;
+  cursor: pointer;
 }
 .currency-list div {
   cursor: pointer;
   padding: 10px 20px;
   transition: all 0.1s;
   font-size: 15px;
+}
+.currency {
+  margin-right: 10px;
 }
 .currency-list div:hover {
   background: #949494;
@@ -251,14 +401,16 @@ li a {
 .colored-box {
   width: 62px;
   height: 41px;
-  background: rgb(68, 255, 3);
   border-radius: 9px;
-  /* border: 1px solid #787a8000; */
-  box-shadow: 0px 0px 7px 0px #aeaeae8a;
+  border: none;
+  box-shadow: 0px 0px 7px 0px #2e2e2e8a;
 }
 .colors-wrapper {
   display: flex;
   flex-direction: column;
+}
+.colors-wrapper div:nth-child(1) {
+  margin-bottom: 5px;
 }
 .add-button {
   background: #5ece7b;
@@ -268,4 +420,5 @@ li a {
   font-size: 16px;
   color: white;
   margin-top: 30px;
+  cursor: pointer;
 }

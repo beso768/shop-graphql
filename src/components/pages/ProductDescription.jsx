@@ -5,17 +5,16 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import Slider from "./../Slider";
 import ProductInfo from "../ProductInfo";
+import NotFound from "./NotFound";
 
 const mapStateToProps = (state) => {
   return {
-    // activeCurrency: state.CurrencyReducer.activeCurrency,
     product: state.ProductReducer.product,
     status: state.ProductReducer.status,
   };
 };
 const mapDispatchToProps = {
   fetchProductById,
-  // addItemToCart,
 };
 class ProductDescription extends Component {
   constructor(props) {
@@ -24,13 +23,7 @@ class ProductDescription extends Component {
       selectedAttributes: [],
     };
   }
-  currency() {
-    const prices = this.props.product?.prices;
-    const currentLabel = "USD";
-    if (prices) {
-      const price = prices.find((item) => item.currency.label === currentLabel);
-    }
-  }
+
   componentDidMount() {
     // fetch product by id
     this.props.fetchProductById(this.props.match.params.id);
@@ -39,11 +32,12 @@ class ProductDescription extends Component {
   render() {
     const { status } = this.props;
     const { product } = this.props;
-    this.currency();
     return (
       <>
-        {status?.loading && Object.keys(product).length === 0 ? (
+        {status?.loading ? (
           <h1>loading</h1>
+        ) : !product ? (
+          <NotFound />
         ) : (
           <div className="d-flex">
             <Slider product={product} />

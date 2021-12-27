@@ -1,63 +1,54 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import Cart from "../src/components/pages/Cart";
 import ProductDescription from "../src/components/pages/ProductDescription";
 import ProductList from "../src/components/pages/ProductList";
-import { ApifetchProductsByCategory } from "./api/StoreApi";
 import Header from "./components/Header";
-import { connect } from "react-redux";
-import { fetchCategories } from "./state/reducers/CategoriesSlice";
+import NotFound from "./components/pages/NotFound";
 import { fetchCurrencies } from "./state/reducers/CurrencySlice";
-import { setActiveCurrency } from "./state/reducers/CurrencySlice";
+
 const mapStateToProps = (state) => {
   return {
-    // currencies: state.CurrencyReducer.currencies,
     categories: state.CategoriesReducer.categories,
-    activeCategory: state.CategoriesReducer.activeCategory,
-    // activeCurrency: state.CurrencyReducer.activeCurrency,
   };
 };
 
 const mapDispatchToProps = {
-  fetchCategories,
-  // fetchProducts,
   fetchCurrencies,
-  setActiveCurrency,
 };
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchCategories();
+    this.props.fetchCurrencies();
   }
 
-  // display() {
-  //   let data = this.props.data;
-  //   if (data.loading) {
-  //     return <h1>Loading...</h1>;
-  //   } else {
-  //     return (
-  //       <ul>
-  //         {data.category.products.map((item) => (
-  //           <li>{item.name}</li>
-  //         ))}
-  //       </ul>
-  //     );
-  //   }
-  // }
-
   render() {
+    const { categories } = this.props;
     return (
       <Router>
         <Header />
         <Switch>
-          <Route exact path="/">
-            <ProductList />
-          </Route>
-          <Route exact path="/product/:id">
+          {categories.map(({ name }) => (
+            <Route exact path={`/${name}`}>
+              <ProductList />
+            </Route>
+          ))}
+          <Route exact path={`/:category/:id`}>
             <ProductDescription />
           </Route>
-
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart">
+            <Cart />
+          </Route>
+          <Redirect exact from="/" to="/all" />
+          <Route path="*">
+            <NotFound />
+          </Route>
         </Switch>
       </Router>
     );

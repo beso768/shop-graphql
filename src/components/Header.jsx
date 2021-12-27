@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Link, NavLink } from "react-router-dom";
-import logo from "../icons/logo.png";
-
-import cart from "../icons/cart.png";
-import "../App.css";
 import { connect } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import "../App.css";
+import logo from "../icons/logo.png";
 import { setActiveCategory } from "../state/reducers/CategoriesSlice";
 import { fetchProducts } from "../state/reducers/ProductsSlice";
+import { fetchCategories } from "./../state/reducers/CategoriesSlice";
+import CartMenu from "./CartMenu";
 import CurrencyMenu from "./CurrencyMenu";
 
 const mapStateToProps = (state) => {
@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setActiveCategory,
   fetchProducts,
+  fetchCategories,
 };
 
 class Header extends Component {
@@ -30,42 +31,47 @@ class Header extends Component {
   }
 
   handleClick(category) {
-    this.props.setActiveCategory(category);
-    this.props.fetchProducts(category);
+    if (this.props.activeCategory !== category) {
+      this.props.setActiveCategory(category);
+      this.props.fetchProducts(category);
+    }
   }
-
+  componentDidMount() {
+    this.props.fetchCategories();
+  }
   render() {
     const { categories } = this.props;
-    const { activeCategory } = this.props;
     return (
       <header>
         <nav>
           <ul className="d-flex">
             {categories?.map(({ name }) => (
               <li
-                className={activeCategory === name ? "active" : ""}
                 key={name}
                 onClick={() => {
                   this.handleClick(name);
                 }}
               >
-                <Link to="/">{name}</Link>
+                <NavLink
+                  to={`/${name}`}
+                  activeStyle={{
+                    color: "#5ece7b",
+                  }}
+                >
+                  {name}
+                </NavLink>
               </li>
             ))}
           </ul>
         </nav>
         <div className="logo">
-          <NavLink to="/">
+          <Link to="/">
             <img src={logo} alt="logo" />
-          </NavLink>
+          </Link>
         </div>
-        <div className="d-flex">
+        <div className="d-flex menu-icons">
           <CurrencyMenu />
-          <div className="cart">
-            <NavLink to="/cart">
-              <img src={cart} alt="cart" />
-            </NavLink>
-          </div>
+          <CartMenu />
         </div>
       </header>
     );

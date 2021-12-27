@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
-export default class Product extends Component {
+class ProductCard extends Component {
   render() {
+    const path = this.props.match?.path;
     const { data } = this.props;
     return (
-      <Link to={`/product/${data.id}`} className="product-box">
+      <Link to={`${path}/${data.id}`} className="product-box">
         <div className="product-image">
           <img
             //   jacket img url is invalid ,so I added other one
@@ -24,3 +26,4 @@ export default class Product extends Component {
     );
   }
 }
+export default withRouter(ProductCard);

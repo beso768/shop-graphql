@@ -42,9 +42,6 @@ class CurrencyMenu extends Component {
     this.setState((prevState) => ({ showMenu: !prevState.showMenu }));
     document.addEventListener("click", this.closeHandler);
   }
-  componentDidMount() {
-    this.props.fetchCurrencies();
-  }
   selectCurrency(currency) {
     this.props.setActiveCurrency(currency);
   }

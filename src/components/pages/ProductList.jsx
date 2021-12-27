@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchProducts } from "../../state/reducers/ProductsSlice";
-import Product from "../ProductCard";
+import ProductCard from "../ProductCard";
 
 const mapStateToProps = (state) => {
   return {
@@ -17,8 +17,9 @@ const mapDispatchToProps = {
 
 class ProductList extends Component {
   componentDidMount() {
-    this.props.fetchProducts("all");
+    this.props.fetchProducts(this.props.activeCategory || "all");
   }
+
   render() {
     const { activeCategory } = this.props;
     return (
@@ -27,7 +28,7 @@ class ProductList extends Component {
         <ul className="product-list">
           {this.props.products?.map((product) => (
             <li key={product.id}>
-              <Product data={product} />
+              <ProductCard data={product} />
             </li>
           ))}
         </ul>

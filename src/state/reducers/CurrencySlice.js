@@ -10,7 +10,7 @@ export const CurrencySlice = createSlice({
   name: "currencies",
   initialState: {
     currencies: [],
-    activeCurrency: { symbol: "$", label: "USD" },
+    activeCurrency: {},
     status: "",
   },
   reducers: {

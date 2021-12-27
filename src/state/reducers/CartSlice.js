@@ -2,21 +2,58 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const CartSlice = createSlice({
   name: "cart",
-  initialState: {
-    cart: [],
-  },
+  initialState: {},
   reducers: {
-    addItemToCart: (state, action) => {
-      console.log("reducer");
-      return { cart: [...state.cart, ...action.payload] };
+    addItem: (state, action) => {
+      const { productId, product, selectedAttributes } = action.payload;
+      const newItem = {
+        product,
+        selectedAttributes,
+      };
+      if (state.hasOwnProperty(productId)) {
+        newItem.quantity = state[productId].quantity + 1;
+      } else {
+        newItem.quantity = 1;
+      }
+      return { ...state, [productId]: newItem };
     },
-    removeItemFromCart: (state, actions) => {},
+    removeItem: (state, action) => {
+      const productId = action.payload;
+      const newState = { ...state };
+      delete newState[productId];
+      return newState;
+    },
+    setNewAttribute: (state, action) => {
+      const { productId, attributeName, attributId } = action.payload;
+      let newSelectedAttributes = { ...state[productId]["selectedAttributes"] };
+      newSelectedAttributes[attributeName] = attributId;
+      return {
+        ...state,
+        [productId]: {
+          ...state[productId],
+          selectedAttributes: newSelectedAttributes,
+        },
+      };
+    },
+    setItemQuantity: (state, action) => {
+      const { productId, type } = action.payload;
+      let quantity = state[productId].quantity;
+      if (type === "increment") {
+        quantity++;
+      } else {
+        quantity--;
+      }
+      return {
+        ...state,
+        [productId]: {
+          ...state[productId],
+          quantity,
+        },
+      };
+    },
   },
 });
 
-export const {
-  addItemToCart,
-  //   removeItemFromCart,
-  //   setNewAttributeSelectedIndex,
-} = CartSlice.actions;
+export const { addItem, removeItem, setNewAttribute, setItemQuantity } =
+  CartSlice.actions;
 export const CartReducer = CartSlice.reducer;
