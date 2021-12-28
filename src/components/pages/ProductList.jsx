@@ -27,7 +27,12 @@ class ProductList extends Component {
         <h2 className="product-category">{activeCategory}</h2>
         <ul className="product-list">
           {this.props.products?.map((product) => (
-            <li key={product.id}>
+            <li
+              key={product.id}
+              style={{
+                opacity: product.inStock ? "1" : "0.6",
+              }}
+            >
               <ProductCard data={product} />
             </li>
           ))}

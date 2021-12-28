@@ -50,7 +50,6 @@ class CurrencyMenu extends Component {
     const { showMenu } = this.state;
     const { currencies } = this.props.currency;
     const { activeCurrency } = this.props.currency;
-
     return (
       <div className="d-flex">
         <div

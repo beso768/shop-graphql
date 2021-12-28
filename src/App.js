@@ -35,7 +35,7 @@ class App extends Component {
         <Header />
         <Switch>
           {categories.map(({ name }) => (
-            <Route exact path={`/${name}`}>
+            <Route exact path={`/${name}`} key={name}>
               <ProductList />
             </Route>
           ))}

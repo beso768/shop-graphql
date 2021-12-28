@@ -45,7 +45,7 @@ class CartMenu extends Component {
 
     return (
       <div className="d-flex" ref={cartBox}>
-        <div onClick={this.operCartMenu}>
+        <div onClick={this.operCartMenu} className="cart-icon">
           <img src={cart} alt="cart" />
         </div>
         {showMenu && (

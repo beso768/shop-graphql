@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { addItem } from "../state/reducers/CartSlice";
 import { connect } from "react-redux";
+import Price from "./Price";
 
 const mapStateToProps = (state) => {
   return {
@@ -68,11 +69,6 @@ class ProductInfo extends Component {
   render() {
     const { product } = this.props;
     const { attributes } = this.props?.product;
-    const { prices } = this.props?.product;
-    const price = prices?.find(
-      (price) => price.currency.label === this.props.activeCurrency.label
-    );
-
     return (
       <>
         {Object.keys(product).length !== 0 && (
@@ -127,11 +123,7 @@ class ProductInfo extends Component {
                     ))}
                     <div className="attribute">
                       <h4>PRICE</h4>
-                      {price && (
-                        <div className="display-price">
-                          {price.currency.symbol} {price.amount}
-                        </div>
-                      )}
+                      <Price prices={product.prices} />
                     </div>
                   </div>
                 )}

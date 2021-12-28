@@ -31,6 +31,10 @@ export const FETCH_PRODUCTS_BY_CATEGORY = gql`
         id
         prices {
           amount
+          currency {
+            label
+            symbol
+          }
         }
       }
     }
