@@ -6,7 +6,7 @@ import logo from "../icons/logo.png";
 import { setActiveCategory } from "../state/reducers/CategoriesSlice";
 import { fetchProducts } from "../state/reducers/ProductsSlice";
 import { fetchCategories } from "./../state/reducers/CategoriesSlice";
-import CartMenu from "./CartMenu";
+import CartMenu from "./cart/CartMenu";
 import CurrencyMenu from "./CurrencyMenu";
 
 const mapStateToProps = (state) => {

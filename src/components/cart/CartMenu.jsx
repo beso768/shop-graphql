@@ -1,9 +1,9 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
-import { setNewAttribute } from "../state/reducers/CartSlice";
-import CartItem from "./cartItem/CartItem";
-import cart from "../icons/cart.png";
-import CartMenuItem from "./cartItem/CartMenuItem";
+import { setNewAttribute } from "../../state/reducers/CartSlice";
+import { v4 as uuidv4 } from "uuid";
+import cart from "../../icons/cart.png";
+import CartMenuItem from "./CartMenuItem";
 const mapStateToProps = (state) => {
   return {
     activeCurrency: state.CurrencyReducer.activeCurrency,
@@ -55,7 +55,9 @@ class CartMenu extends Component {
                 My Bag , <span>{cartItems.length} Items</span>
               </h5>
               {cartItems && cartItems.length > 0 ? (
-                cartItems.map((obj) => <CartMenuItem data={obj} />)
+                cartItems.map((obj) => (
+                  <CartMenuItem data={obj} key={uuidv4()} />
+                ))
               ) : (
                 <h1>No products.</h1>
               )}

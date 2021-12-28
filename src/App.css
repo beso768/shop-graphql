@@ -272,9 +272,13 @@ header a {
 }
 .product-box h3 {
   margin: 5% 0;
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
 }
 .product-box {
-  display: block;
+  position: relative;
   height: 100%;
 }
 .add-to-cart {
@@ -284,7 +288,7 @@ header a {
   padding: 9px;
   border-radius: 50%;
   display: flex;
-  bottom: 1px;
+  bottom: 20%;
   position: absolute;
   right: 20px;
   cursor: pointer;

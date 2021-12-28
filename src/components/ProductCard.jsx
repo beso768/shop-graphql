@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import Price from "./Price";
 import cart from "../icons/cart.png";
+
+// const mapDispatchToProps = {
+//   addItem,
+// };
+
 class ProductCard extends Component {
   render() {
     const path = this.props.match?.path;
@@ -10,7 +15,7 @@ class ProductCard extends Component {
 
     return (
       <div className="product-box">
-        <div to={`${path}/${data.id}`} className="product-image">
+        <div className="product-image">
           <Link to={`${path}/${data.id}`}>
             <img
               //   jacket img url is invalid ,so I added other one
