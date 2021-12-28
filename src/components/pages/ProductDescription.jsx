@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
-import { fetchProductById } from "./../../state/reducers/ProductSlice";
+import {
+  fetchProductById,
+  cleanProduct,
+} from "./../../state/reducers/ProductSlice";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import Slider from "./../Slider";
@@ -15,6 +18,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   fetchProductById,
+  cleanProduct,
 };
 class ProductDescription extends Component {
   constructor(props) {
@@ -28,21 +32,27 @@ class ProductDescription extends Component {
     // fetch product by id
     this.props.fetchProductById(this.props.match.params.id);
   }
+  componentWillUnmount() {
+    this.props.cleanProduct();
+  }
 
   render() {
-    const { status } = this.props;
+    const { loading, success, error } = this.props.status;
     const { product } = this.props;
+
     return (
       <>
-        {status?.loading ? (
-          <h1>loading</h1>
-        ) : !product ? (
-          <NotFound />
-        ) : (
-          <div className="d-flex">
+        {loading ? (
+          <em>Loading...</em>
+        ) : success && product ? (
+          <section className="product-wrapper">
             <Slider product={product} />
             <ProductInfo product={product} />
-          </div>
+          </section>
+        ) : error ? (
+          <h1>Something went wrong</h1>
+        ) : (
+          <NotFound />
         )}
       </>
     );

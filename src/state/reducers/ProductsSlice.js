@@ -19,19 +19,19 @@ export const ProductsSlice = createSlice({
     builder.addCase(fetchProducts.pending, () => {
       return {
         products: [],
-        status: "loading",
+        status: { loading: true },
       };
     });
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       return {
         products: action.payload.data.category.products,
-        status: "success",
+        status: { success: true },
       };
     });
     builder.addCase(fetchProducts.rejected, () => {
       return {
         products: [],
-        status: "error",
+        status: { error: true },
       };
     });
   },

@@ -17,14 +17,14 @@ class Cart extends Component {
   render() {
     const cartItems = Object.values(this.props.cart);
     return (
-      <div>
+      <section>
         <h2 className="page-title">Cart</h2>
         {cartItems && cartItems.length > 0 ? (
           cartItems.map((obj) => <CartItem data={obj} />)
         ) : (
           <h1>No products.</h1>
         )}
-      </div>
+      </section>
     );
   }
 }

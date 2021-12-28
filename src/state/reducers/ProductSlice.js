@@ -15,26 +15,34 @@ export const ProductSlice = createSlice({
     product: {},
     status: "",
   },
+  reducers: {
+    cleanProduct: (state, action) => {
+      return {
+        ...state,
+        product: {},
+      };
+    },
+  },
   extraReducers(builder) {
     builder.addCase(fetchProductById.pending, (state) => {
       return {
         ...state,
-        status: "loading",
+        status: { loading: true },
       };
     });
     builder.addCase(fetchProductById.fulfilled, (state, action) => {
       return {
-        status: "success",
+        status: { success: true },
         product: action.payload.data.product,
       };
     });
     builder.addCase(fetchProductById.rejected, () => {
       return {
-        status: "error",
+        status: { error: true },
         product: {},
       };
     });
   },
 });
-
+export const { cleanProduct } = ProductSlice.actions;
 export const ProductReducer = ProductSlice.reducer;

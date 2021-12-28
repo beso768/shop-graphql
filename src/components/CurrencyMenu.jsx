@@ -71,7 +71,7 @@ class CurrencyMenu extends Component {
                   })
                 }
               >
-                {currency.symbol}{" "}
+                {currency.symbol}
                 <span className="currency-label">{currency.label}</span>
               </div>
             ))}

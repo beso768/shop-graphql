@@ -21,23 +21,34 @@ class ProductList extends Component {
   }
 
   render() {
-    const { activeCategory } = this.props;
+    const {
+      activeCategory,
+      products,
+      status: { loading, success },
+    } = this.props;
+
     return (
-      <div>
+      <section>
         <h2 className="product-category">{activeCategory}</h2>
         <ul className="product-list">
-          {this.props.products?.map((product) => (
-            <li
-              key={product.id}
-              style={{
-                opacity: product.inStock ? "1" : "0.6",
-              }}
-            >
-              <ProductCard data={product} />
-            </li>
-          ))}
+          {loading ? (
+            <em>Loading...</em>
+          ) : success ? (
+            products.map((product) => (
+              <li
+                key={product.id}
+                style={{
+                  opacity: product.inStock ? "1" : "0.6",
+                }}
+              >
+                <ProductCard data={product} />
+              </li>
+            ))
+          ) : (
+            <h2>Something went wrong</h2>
+          )}
         </ul>
-      </div>
+      </section>
     );
   }
 }

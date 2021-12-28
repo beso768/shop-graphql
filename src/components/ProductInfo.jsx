@@ -73,8 +73,8 @@ class ProductInfo extends Component {
       <>
         {Object.keys(product).length !== 0 && (
           <div className="description">
-            <h2>{product.brand}</h2>
-            <h3>{product.name}</h3>
+            <h3>{product.brand}</h3>
+            <h4>{product.name}</h4>
 
             {product.inStock ? (
               <>
