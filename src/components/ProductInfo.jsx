@@ -28,7 +28,6 @@ class ProductInfo extends Component {
     const { product } = this.props;
     const { attributes } = product;
     const stateAttributes = Object.keys(this.state.attributes);
-
     const errors = [];
     attributes.forEach((attribute) => {
       const attributeResult = stateAttributes.find(
@@ -48,8 +47,8 @@ class ProductInfo extends Component {
       product,
       selectedAttributes: this.state.attributes,
     };
-
     this.props.addItem(cartItem);
+    this.setState({ attributes: {} });
   }
 
   selectAttribute(attrName, attrId) {
@@ -69,6 +68,7 @@ class ProductInfo extends Component {
   render() {
     const { product } = this.props;
     const { attributes } = this.props?.product;
+    const { validationErrors } = this.state;
     return (
       <>
         {Object.keys(product).length !== 0 && (
@@ -78,56 +78,6 @@ class ProductInfo extends Component {
 
             {product.inStock ? (
               <>
-                {attributes.length > 0 && (
-                  <div className="attributes">
-                    {attributes.map((attribute) => (
-                      <div className="attribute" key={attribute.id}>
-                        <h4>{attribute.name}</h4>
-
-                        {attribute.type === "swatch" ? (
-                          <div className="d-flex">
-                            {attribute.items.map((item) => (
-                              <div
-                                className="colors-wrapper"
-                                key={item.id}
-                                onClick={() =>
-                                  this.selectAttribute(attribute.id, item.id)
-                                }
-                              >
-                                <div>{item.displayValue}</div>
-                                <div
-                                  style={{
-                                    background: item.value,
-                                  }}
-                                  className="display-value colored-box"
-                                ></div>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="d-flex">
-                            {attribute.items.map((item) => (
-                              <div
-                                className="display-value"
-                                key={item.id}
-                                onClick={() =>
-                                  this.selectAttribute(attribute.id, item.id)
-                                }
-                              >
-                                <span>{item.value}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                    <div className="attribute">
-                      <h4>PRICE</h4>
-                      <Price prices={product.prices} />
-                    </div>
-                  </div>
-                )}
-
                 <button
                   onClick={this.addToCart}
                   className="add-button"
@@ -143,6 +93,18 @@ class ProductInfo extends Component {
               </>
             ) : (
               <h1>Out of stock</h1>
+            )}
+            {this.state.validationErrors && (
+              <div className="errors">
+                Please choose{" "}
+                {validationErrors.map((field, ind) =>
+                  ind === validationErrors.length - 1 ? (
+                    <strong>{field}.</strong>
+                  ) : (
+                    <strong>{field} and </strong>
+                  )
+                )}
+              </div>
             )}
             <div className="description-text">
               <div dangerouslySetInnerHTML={{ __html: product.description }} />

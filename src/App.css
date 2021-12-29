@@ -303,6 +303,13 @@ header a {
   padding: 3%;
   color: black;
 }
+.errors {
+  margin: 20px 0;
+  color: #fb3b3b;
+  font-size: 19px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+}
 
 /* .products description  */
 .description h3,
@@ -335,7 +342,6 @@ header a {
 .slider {
   display: flex;
   max-height: 600px;
-  width: 50%;
 }
 .image-collection img {
   width: 100%;
@@ -409,13 +415,14 @@ header a {
   font-size: 16px;
   cursor: pointer;
   font-family: "Roboto Condensed", sans-serif;
+  transition: 0.1s;
 }
 .display-price {
   font-size: 16px;
   font-family: "Roboto Condensed", sans-serif;
 }
 .display-value:hover {
-  background: #bdbdbd;
+  filter: brightness(0.5);
 }
 .colored-box {
   width: 62px;

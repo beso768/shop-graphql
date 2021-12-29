@@ -12,7 +12,7 @@ class ProductCard extends Component {
   render() {
     const path = this.props.match?.path;
     const { data } = this.props;
-
+    console.log(data);
     return (
       <div className="product-box">
         <div className="product-image">
@@ -29,9 +29,12 @@ class ProductCard extends Component {
           </Link>
           {!data.inStock && <span className="out-stock">OUT OF STOCK</span>}
         </div>
-        <div className="add-to-cart">
-          <img src={cart} alt="cart" />
-        </div>
+        {data.inStock && (
+          <div className="add-to-cart">
+            <img src={cart} alt="cart" />
+          </div>
+        )}
+
         <h3>{data.name}</h3>
         <Price prices={data.prices} />
       </div>

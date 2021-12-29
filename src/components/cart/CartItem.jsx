@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setNewAttribute } from "../../state/reducers/CartSlice";
 import ItemSlider from "./ItemSlider";
 import ItemQuantity from "./ItemQuantity";
+import Price from "../Price";
 
 const mapStateToProps = (state) => {
   return {
@@ -38,9 +39,6 @@ class CartItem extends Component {
   render() {
     const { product, selectedAttributes, quantity } = this.props.data;
 
-    const price = product.prices?.find(
-      (price) => price.currency.label === this.props.activeCurrency.label
-    );
     return (
       <div className="cart-item">
         {product && (
@@ -49,11 +47,7 @@ class CartItem extends Component {
               <h3>{product.name}</h3>
               <h4>{product.brand}</h4>
               <div className="attribute">
-                {price && (
-                  <div className="display-price">
-                    {price.currency.symbol} {price.amount}
-                  </div>
-                )}
+                <Price prices={product.prices} />
               </div>
               {product.attributes.map((attribute) => (
                 <div className="attribute" key={attribute.id}>

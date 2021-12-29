@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setNewAttribute } from "../../state/reducers/CartSlice";
-import CartItem from "../cartItem/CartItem";
+import CartItem from "../cart/CartItem";
 
 const mapStateToProps = (state) => {
   return {
