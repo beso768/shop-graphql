@@ -3,40 +3,29 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import Price from "./Price";
 import cart from "../icons/cart.png";
-
-// const mapDispatchToProps = {
-//   addItem,
-// };
+import ProductInfo from "../components/ProductInfo";
 
 class ProductCard extends Component {
   render() {
     const path = this.props.match?.path;
-    const { data } = this.props;
-    console.log(data);
+    const { product } = this.props;
     return (
       <div className="product-box">
         <div className="product-image">
-          <Link to={`${path}/${data.id}`}>
+          <Link to={`${path}/${product.id}`}>
             <img
               //   jacket img url is invalid ,so I added other one
               src={
-                data.id !== "jacket-canada-goosee"
-                  ? data.gallery
+                product.id !== "jacket-canada-goosee"
+                  ? product.gallery
                   : "https://media.dior.com/couture/ecommerce/media/catalog/product/7/g/1570207502_943C449A4462_C989_E01_ZHC.jpg"
               }
-              alt={data.gallery}
+              alt={product.gallery}
             />
           </Link>
-          {!data.inStock && <span className="out-stock">OUT OF STOCK</span>}
+          {!product.inStock && <span className="out-stock">OUT OF STOCK</span>}
         </div>
-        {data.inStock && (
-          <div className="add-to-cart">
-            <img src={cart} alt="cart" />
-          </div>
-        )}
-
-        <h3>{data.name}</h3>
-        <Price prices={data.prices} />
+        <ProductInfo product={product} miniSize={true} />
       </div>
     );
   }

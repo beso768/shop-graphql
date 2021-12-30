@@ -1,9 +1,12 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
-import { setNewAttribute } from "../../state/reducers/CartSlice";
+import { setNewAttribute, checkout } from "../../state/reducers/CartSlice";
 import { v4 as uuidv4 } from "uuid";
 import cart from "../../icons/cart.png";
 import CartMenuItem from "./CartMenuItem";
+import "./Cart.css";
+import { Link } from "react-router-dom";
+
 const mapStateToProps = (state) => {
   return {
     activeCurrency: state.CurrencyReducer.activeCurrency,
@@ -12,6 +15,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   setNewAttribute,
+  checkout,
 };
 
 const cartBox = createRef();
@@ -41,6 +45,7 @@ class CartMenu extends Component {
 
   render() {
     const { showMenu } = this.state;
+    const { checkout } = this.props;
     const cartItems = Object.values(this.props.cart);
 
     return (
@@ -54,13 +59,28 @@ class CartMenu extends Component {
               <h5>
                 My Bag , <span>{cartItems.length} Items</span>
               </h5>
-              {cartItems && cartItems.length > 0 ? (
-                cartItems.map((obj) => (
-                  <CartMenuItem data={obj} key={uuidv4()} />
-                ))
-              ) : (
-                <h1>No products.</h1>
-              )}
+              <div>
+                {cartItems && cartItems.length > 0 ? (
+                  <>
+                    {cartItems.map((obj) => (
+                      <CartMenuItem data={obj} key={uuidv4()} />
+                    ))}
+                    <h5>
+                      Total , <span>{this.props.activeCurrency.symbol}</span>
+                    </h5>
+                  </>
+                ) : (
+                  <h1>No products.</h1>
+                )}
+                <div className="buttons">
+                  <button className="view-bag">
+                    <Link to="/cart">View Bag</Link>
+                  </button>
+                  <button className="checkout" onClick={checkout}>
+                    Checkout
+                  </button>
+                </div>
+              </div>
             </div>
             <div
               className="cart-backdrop"

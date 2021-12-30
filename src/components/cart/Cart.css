@@ -8,3 +8,28 @@
   height: 100%;
   object-fit: cover;
 }
+.buttons {
+  margin: 20px;
+  display: flex;
+}
+.buttons button {
+  width: 140px;
+  height: 43px;
+  cursor: pointer;
+  font-family: "Raleway", sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+}
+.view-bag {
+  background: white;
+  border: 1px solid black;
+}
+.view-bag a {
+  margin: 0 !important;
+}
+.checkout {
+  border: none;
+  color: white;
+  background: #5ece7b;
+  margin-left: 20px;
+}

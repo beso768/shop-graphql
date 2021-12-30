@@ -1,14 +1,28 @@
 import React, { Component } from "react";
+import Price from "./Price";
 
 export default class Attributes extends Component {
   render() {
-    const attributes = [];
+    const {
+      product,
+      attributes,
+      selectAttribute,
+      selectedAttributes,
+      miniSize,
+    } = this.props;
     return (
       <>
+        <div className={`attribute ${miniSize && "menu"}`}>
+          <h4>PRICE</h4>
+          <Price prices={product.prices} />
+        </div>
         {attributes.length > 0 && (
           <div className="attributes">
             {attributes.map((attribute) => (
-              <div className="attribute" key={attribute.id}>
+              <div
+                className={`attribute ${miniSize && "menu"}`}
+                key={attribute.id}
+              >
                 <h4>{attribute.name}</h4>
 
                 {attribute.type === "swatch" ? (
@@ -17,12 +31,10 @@ export default class Attributes extends Component {
                       <div
                         className="colors-wrapper"
                         key={item.id}
-                        onClick={() =>
-                          this.selectAttribute(attribute.id, item.id)
-                        }
+                        onClick={() => selectAttribute(attribute.id, item.id)}
                         style={{
                           filter:
-                            this.state.attributes[attribute.name] === item.id
+                            selectedAttributes[attribute.name] === item.id
                               ? "drop-shadow(black 0px 0px 0px)"
                               : "none",
                         }}
@@ -32,7 +44,9 @@ export default class Attributes extends Component {
                           style={{
                             background: item.value,
                           }}
-                          className="display-value colored-box"
+                          className={`display-value colored-box ${
+                            miniSize && "menu"
+                          }`}
                         ></div>
                       </div>
                     ))}
@@ -41,13 +55,11 @@ export default class Attributes extends Component {
                   <div className="d-flex">
                     {attribute.items.map((item) => (
                       <div
-                        className="display-value"
+                        className={`display-value ${miniSize && "menu"}`}
                         key={item.id}
-                        onClick={() =>
-                          this.selectAttribute(attribute.id, item.id)
-                        }
+                        onClick={() => selectAttribute(attribute.id, item.id)}
                         style={
-                          this.state.attributes[attribute.name] === item.id
+                          selectedAttributes[attribute.name] === item.id
                             ? {
                                 backgroundColor: "black",
                                 color: "white",
@@ -65,10 +77,6 @@ export default class Attributes extends Component {
                 )}
               </div>
             ))}
-            <div className="attribute">
-              <h4>PRICE</h4>
-              <Price prices={product.prices} />
-            </div>
           </div>
         )}
       </>

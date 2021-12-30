@@ -35,10 +35,11 @@ const persistedReducer = persistReducer(
     key: "root",
     storage,
     version: 0,
-    blacklist: ["ProductsReducer", "ProductReducer", "CategoriesReducer"],
-    transforms: [
-      createFilter("CurrencyReducer", ["activeCurrency", "currencies"]),
-      createFilter("CurrencyReducer", null, ["activeCurrency", "currencies"]),
+    blacklist: [
+      "ProductsReducer",
+      "ProductReducer",
+      "CategoriesReducer",
+      "CurrencyReducer",
     ],
     migrate: createMigrate(migrations, { debug: false }),
     stateReconciler: autoMergeLevel2,

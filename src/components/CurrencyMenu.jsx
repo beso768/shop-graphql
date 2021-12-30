@@ -57,7 +57,7 @@ class CurrencyMenu extends Component {
           className="currency"
           onClick={this.operCurrencyMenu}
         >
-          <span>{activeCurrency.symbol}</span>
+          <span>{activeCurrency?.symbol}</span>
         </div>
         {showMenu && (
           <div className="currency-list">

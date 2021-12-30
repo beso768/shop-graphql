@@ -5,12 +5,12 @@ export const fetchCurrencies = createAsyncThunk("currencies", async () => {
   const res = await ApiFetchAllCurrencies();
   return res;
 });
-
+// localStorage.length === 0 && { label: "USD", symbol: "$" };
 export const CurrencySlice = createSlice({
   name: "currencies",
   initialState: {
     currencies: [],
-    activeCurrency: localStorage.length === 0 && { label: "USD", symbol: "$" },
+    activeCurrency: { label: "USD", symbol: "$" },
     status: "",
   },
   reducers: {

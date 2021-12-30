@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { addItem } from "../state/reducers/CartSlice";
 import { connect } from "react-redux";
-import Price from "./Price";
+import { addItem } from "../state/reducers/CartSlice";
+import Attributes from "./Attributes";
+import cart from "../icons/cart.png";
 
 const mapStateToProps = (state) => {
   return {
@@ -21,6 +22,7 @@ class ProductInfo extends Component {
     this.state = {
       attributes: {},
       validationErrors: null,
+      addedSuccesfully: false,
     };
   }
 
@@ -66,7 +68,7 @@ class ProductInfo extends Component {
   }
 
   render() {
-    const { product } = this.props;
+    const { product, miniSize } = this.props;
     const { attributes } = this.props?.product;
     const { validationErrors } = this.state;
     return (
@@ -78,9 +80,16 @@ class ProductInfo extends Component {
 
             {product.inStock ? (
               <>
+                <Attributes
+                  product={product}
+                  attributes={attributes}
+                  selectAttribute={this.selectAttribute}
+                  selectedAttributes={this.state.attributes}
+                  miniSize={miniSize}
+                />
                 <button
                   onClick={this.addToCart}
-                  className="add-button"
+                  className={miniSize ? "add-to-cart" : "add-button"}
                   disabled={this.state.validationErrors}
                   style={
                     this.state.validationErrors && {
@@ -88,27 +97,34 @@ class ProductInfo extends Component {
                     }
                   }
                 >
-                  ADD TO CART
+                  {miniSize ? (
+                    <img src={cart} alt="cart" />
+                  ) : (
+                    <span>ADD TO CART</span>
+                  )}
                 </button>
               </>
             ) : (
-              <h1>Out of stock</h1>
+              <>{!miniSize && <h1>Out of stock</h1>}</>
             )}
             {this.state.validationErrors && (
               <div className="errors">
-                Please choose{" "}
-                {validationErrors.map((field, ind) =>
-                  ind === validationErrors.length - 1 ? (
-                    <strong>{field}.</strong>
-                  ) : (
-                    <strong>{field} and </strong>
-                  )
-                )}
+                Please choose field(s) :{" "}
+                {validationErrors.map((field, ind) => (
+                  <strong>
+                    {field}{" "}
+                    {ind === validationErrors.length - 1 ? <> . </> : <> , </>}
+                  </strong>
+                ))}
               </div>
             )}
-            <div className="description-text">
-              <div dangerouslySetInnerHTML={{ __html: product.description }} />
-            </div>
+            {!miniSize && (
+              <div className="description-text">
+                <div
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
+              </div>
+            )}
           </div>
         )}
       </>

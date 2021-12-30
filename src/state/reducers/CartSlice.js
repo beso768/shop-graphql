@@ -35,6 +35,9 @@ export const CartSlice = createSlice({
         },
       };
     },
+    checkout: (state, action) => {
+      return {};
+    },
     setItemQuantity: (state, action) => {
       const { productId, type } = action.payload;
       let quantity = state[productId].quantity;
@@ -54,6 +57,11 @@ export const CartSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem, setNewAttribute, setItemQuantity } =
-  CartSlice.actions;
+export const {
+  addItem,
+  removeItem,
+  setNewAttribute,
+  setItemQuantity,
+  checkout,
+} = CartSlice.actions;
 export const CartReducer = CartSlice.reducer;

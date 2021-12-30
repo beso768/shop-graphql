@@ -41,7 +41,7 @@ class ProductList extends Component {
                   opacity: product.inStock ? "1" : "0.6",
                 }}
               >
-                <ProductCard data={product} />
+                <ProductCard product={product} />
               </li>
             ))
           ) : (
