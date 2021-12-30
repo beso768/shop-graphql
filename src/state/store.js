@@ -1,26 +1,23 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { CategoriesReducer } from "../state/reducers/CategoriesSlice";
-import { ProductsReducer } from "../state/reducers/ProductsSlice";
-import { ProductReducer } from "./../state/reducers/ProductSlice";
-import { CurrencyReducer } from "../state/reducers/CurrencySlice";
-import { CartReducer } from "../state/reducers/CartSlice";
-
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
-  persistStore,
-  persistReducer,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from "redux-persist";
-
-import createFilter from "redux-persist-transform-filter";
-import storage from "redux-persist/lib/storage";
 import createMigrate from "redux-persist/es/createMigrate";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
-import migrations from "./migrations";
+import storage from "redux-persist/lib/storage";
+import migrations from "../api/migrations";
+import { CartReducer } from "./reducers/CartSlice";
+import { CategoriesReducer } from "./reducers/CategoriesSlice";
+import { CurrencyReducer } from "./reducers/CurrencySlice";
+import { ProductReducer } from "./reducers/ProductSlice";
+import { ProductsReducer } from "./reducers/ProductsSlice";
 
 const rootReducer = combineReducers({
   CategoriesReducer,
