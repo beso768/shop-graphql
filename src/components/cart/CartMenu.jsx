@@ -1,6 +1,6 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
-import { setNewAttribute, checkout } from "../../state/reducers/CartSlice";
+import { setNewAttribute } from "../../state/reducers/CartSlice";
 import { v4 as uuidv4 } from "uuid";
 import cart from "../../icons/cart.png";
 import CartMenuItem from "./CartMenuItem";
@@ -15,7 +15,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   setNewAttribute,
-  checkout,
 };
 
 const cartBox = createRef();
@@ -31,11 +30,12 @@ class CartMenu extends Component {
   }
 
   closeHandler({ target }) {
-    if (!cartBox.current.contains(target)) {
-      this.setState({ showMenu: false }, () =>
-        document.removeEventListener("click", this.closeHandler)
-      );
-    }
+    console.log(cartBox.current.contains(target));
+    // if (!cartBox.current.contains(target)) {
+    //   this.setState({ showMenu: false }, () =>
+    //     document.removeEventListener("click", this.closeHandler)
+    //   );
+    // }
   }
 
   operCartMenu() {
@@ -45,11 +45,10 @@ class CartMenu extends Component {
 
   render() {
     const { showMenu } = this.state;
-    const { checkout } = this.props;
     const cartItems = Object.values(this.props.cart);
 
     return (
-      <div className="d-flex" ref={cartBox}>
+      <div className="d-flex adssas" ref={cartBox}>
         <div onClick={this.operCartMenu} className="cart-icon">
           <img src={cart} alt="cart" />
         </div>
@@ -73,12 +72,10 @@ class CartMenu extends Component {
                   <h1>No products.</h1>
                 )}
                 <div className="buttons">
-                  <button className="view-bag">
-                    <Link to="/cart">View Bag</Link>
-                  </button>
-                  <button className="checkout" onClick={checkout}>
-                    Checkout
-                  </button>
+                  <Link to="/cart" className="view-bag">
+                    View Bag
+                  </Link>
+                  <button className="checkout">Checkout</button>
                 </div>
               </div>
             </div>

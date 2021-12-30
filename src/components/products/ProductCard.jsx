@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import Price from "./Price";
-import cart from "../icons/cart.png";
-import ProductInfo from "../components/ProductInfo";
-
+import ProductInfo from "./ProductInfo";
+import "./Products.css";
 class ProductCard extends Component {
   render() {
     const path = this.props.match?.path;

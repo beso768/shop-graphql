@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import "./Products.css";
 export default class Slider extends Component {
   constructor(props) {
     super(props);

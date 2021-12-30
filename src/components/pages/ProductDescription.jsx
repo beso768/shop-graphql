@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-
-import {
-  fetchProductById,
-  cleanProduct,
-} from "./../../state/reducers/ProductSlice";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import Slider from "./../Slider";
-import ProductInfo from "../ProductInfo";
+import ProductInfo from "../products/ProductInfo";
+import {
+  cleanProduct,
+  fetchProductById,
+} from "./../../state/reducers/ProductSlice";
+import Slider from "./../products/Slider";
 import NotFound from "./NotFound";
 
 const mapStateToProps = (state) => {

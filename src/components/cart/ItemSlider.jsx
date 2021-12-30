@@ -35,19 +35,13 @@ export default class ItemSlider extends PureComponent {
     const { gallery } = this.props;
     return (
       <div className="cart-slider-wrapper">
-        <button
-          onClick={() => this.handleClick("-")}
-          disabled={gallery.length === 1}
-        >
-          {"<"}
-        </button>
         <img src={gallery[this.state.currentImg]} alt="productimg" />
-        <button
-          onClick={() => this.handleClick("+")}
-          disabled={gallery.length === 1}
-        >
-          {">"}
-        </button>
+        {gallery.length !== 1 && (
+          <>
+            <button onClick={() => this.handleClick("-")}>{"<"}</button>
+            <button onClick={() => this.handleClick("+")}>{">"}</button>
+          </>
+        )}
       </div>
     );
   }

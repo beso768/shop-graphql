@@ -5,24 +5,29 @@ import { connect } from "react-redux";
 import ItemQuantity from "./ItemQuantity";
 import Price from "../Price";
 import Attributes from "./CartAttributes";
+import { removeItem } from "../../state/reducers/CartSlice";
 
 const mapStateToProps = (state) => {
   return {
     activeCurrency: state.CurrencyReducer.activeCurrency,
   };
 };
-
+const mapDispatchToProps = {
+  removeItem,
+};
 class CartMenuItem extends Component {
   render() {
+    const { removeItem } = this.props;
     const { product, selectedAttributes, quantity } = this.props.data;
     return (
       <div className="menu-item-wrapper">
         {product && (
           <>
+            <button onClick={() => removeItem(product.id)}>Delte</button>
             <div className="left menu-item">
               <h3>{product.name}</h3>
               <h4>{product.brand}</h4>
-              <div className="attribute">
+              <div className="price">
                 <Price prices={product.prices} />
               </div>
               <Attributes
@@ -46,4 +51,4 @@ class CartMenuItem extends Component {
     );
   }
 }
-export default connect(mapStateToProps, null)(CartMenuItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CartMenuItem);

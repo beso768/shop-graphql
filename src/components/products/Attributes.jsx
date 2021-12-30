@@ -1,28 +1,15 @@
 import React, { Component } from "react";
-import Price from "./Price";
-
+import "./Products.css";
 export default class Attributes extends Component {
   render() {
-    const {
-      product,
-      attributes,
-      selectAttribute,
-      selectedAttributes,
-      miniSize,
-    } = this.props;
+    const { attributes, selectAttribute, selectedAttributes, miniSize } =
+      this.props;
     return (
       <>
-        <div className={`attribute ${miniSize && "menu"}`}>
-          <h4>PRICE</h4>
-          <Price prices={product.prices} />
-        </div>
         {attributes.length > 0 && (
-          <div className="attributes">
+          <div className={`attributes ${miniSize ? "menu" : ""}`}>
             {attributes.map((attribute) => (
-              <div
-                className={`attribute ${miniSize && "menu"}`}
-                key={attribute.id}
-              >
+              <div className="attribute" key={attribute.id}>
                 <h4>{attribute.name}</h4>
 
                 {attribute.type === "swatch" ? (

@@ -46,7 +46,7 @@ class CartItem extends Component {
             <div className="left">
               <h3>{product.name}</h3>
               <h4>{product.brand}</h4>
-              <div className="attribute">
+              <div className="price">
                 <Price prices={product.prices} />
               </div>
               {product.attributes.map((attribute) => (
