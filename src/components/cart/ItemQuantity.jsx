@@ -20,16 +20,12 @@ class ItemQuantity extends Component {
   //   this.handleClick = this.handleClick.bind(this);
   // }
   handleClick(sign) {
-    const { productId, setItemQuantity, quantity, removeItem } = this.props;
+    const { productId, setItemQuantity } = this.props;
 
     if (sign === "+") {
       setItemQuantity({ productId, type: "increment" });
     } else {
-      if (quantity > 1) {
-        setItemQuantity({ productId, type: "decrement" });
-      } else {
-        removeItem(productId);
-      }
+      setItemQuantity({ productId, type: "decrement" });
     }
   }
 

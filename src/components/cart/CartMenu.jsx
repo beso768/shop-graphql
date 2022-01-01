@@ -30,17 +30,16 @@ class CartMenu extends Component {
   }
 
   closeHandler({ target }) {
-    console.log(cartBox.current.contains(target));
-    // if (!cartBox.current.contains(target)) {
-    //   this.setState({ showMenu: false }, () =>
-    //     document.removeEventListener("click", this.closeHandler)
-    //   );
-    // }
+    if (!cartBox.current.contains(target)) {
+      this.setState({ showMenu: false }, () =>
+        document.removeEventListener("click", this.closeHandler)
+      );
+    }
   }
 
   operCartMenu() {
     this.setState((prevState) => ({ showMenu: !prevState.showMenu }));
-    document.addEventListener("click", this.closeHandler);
+    document.addEventListener("click", this.closeHandler, { capture: true });
   }
 
   render() {
