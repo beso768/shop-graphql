@@ -17,21 +17,20 @@ const mapDispatchToProps = {
   fetchCurrencies,
 };
 
-const currencyBox = createRef();
-
 class CurrencyMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showMenu: false,
     };
+    this.currencyBox = createRef();
     this.operCurrencyMenu = this.operCurrencyMenu.bind(this);
     this.selectCurrency = this.selectCurrency.bind(this);
     this.closeHandler = this.closeHandler.bind(this);
   }
 
   closeHandler({ target }) {
-    if (!currencyBox.current.contains(target)) {
+    if (!this.currencyBox.current.contains(target)) {
       this.setState({ showMenu: false }, () =>
         document.removeEventListener("click", this.closeHandler)
       );
@@ -46,6 +45,10 @@ class CurrencyMenu extends Component {
     this.props.setActiveCurrency(currency);
   }
 
+  componentDidMount() {
+    this.props.fetchCurrencies();
+  }
+
   render() {
     const { showMenu } = this.state;
     const { currencies } = this.props.currency;
@@ -53,7 +56,7 @@ class CurrencyMenu extends Component {
     return (
       <div className="d-flex">
         <div
-          ref={currencyBox}
+          ref={this.currencyBox}
           className="currency"
           onClick={this.operCurrencyMenu}
         >

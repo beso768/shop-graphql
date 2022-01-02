@@ -23,6 +23,9 @@ export const CartSlice = createSlice({
       delete newState[productId];
       return newState;
     },
+    checkout: (state, action) => {
+      return {};
+    },
     setNewAttribute: (state, action) => {
       const { productId, attributeName, attributId } = action.payload;
       let newSelectedAttributes = { ...state[productId]["selectedAttributes"] };

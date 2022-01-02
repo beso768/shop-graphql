@@ -52,6 +52,7 @@
   height: 100%;
 }
 .cart-icon {
+  position: relative;
   cursor: pointer;
 }
 .cart-slider-wrapper button {
@@ -97,6 +98,84 @@
   max-height: 80vh;
   overflow-y: scroll;
 }
+.page-quantity,
+.menu-quantity {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+.menu-quantity button,
+.page-quantity button {
+  background: white;
+  border: 1px solid #1d1f22;
+  cursor: pointer;
+  font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page-quantity button {
+  width: 45px;
+  height: 45px;
+}
+.menu-quantity button {
+  width: 24px;
+  height: 24px;
+}
+
+.attribute {
+  margin-top: 7%;
+}
+
+.right,
+.right-menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.right {
+  height: 180px;
+}
+
+.left h3 {
+  font-size: 30px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  margin: 1% 0px;
+}
+.left h4 {
+  font-size: 20px;
+  font-weight: revert;
+  font-family: "Raleway", sans-serif;
+  margin-bottom: 7%;
+}
+.left.menu-item h3,
+.left.menu-item h4 {
+  font-size: 15px;
+}
+.right-menu-item {
+  height: 110px;
+}
+.op-wrapper {
+  display: flex;
+  height: 100%;
+}
+.trash-icon {
+  width: 20px;
+  width: 20px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: 0.1s;
+  opacity: 0;
+}
+.cart-item:hover .trash-icon,
+.menu-item-wrapper:hover .trash-icon {
+  opacity: 1;
+}
 .cart-backdrop {
   position: fixed;
   backdrop-filter: brightness(0.7);
@@ -105,4 +184,15 @@
   left: 0;
   top: 85px;
   z-index: 10;
+}
+.icon-quantity {
+  background: black;
+  color: white;
+  border-radius: 50%;
+  padding: 0px 4px;
+  font-size: 13px;
+  position: absolute;
+  left: 12px;
+  bottom: 16px;
+  font-family: "Roboto Condensed", sans-serif;
 }

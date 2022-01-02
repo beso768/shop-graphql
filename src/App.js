@@ -6,12 +6,11 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import Cart from "../src/components/pages/Cart";
 import ProductDescription from "../src/components/pages/ProductDescription";
 import ProductList from "../src/components/pages/ProductList";
 import Header from "./components/Header";
+import CartPage from "./components/pages/CartPage";
 import NotFound from "./components/pages/NotFound";
-import { fetchCurrencies } from "./state/reducers/CurrencySlice";
 
 const mapStateToProps = (state) => {
   return {
@@ -19,15 +18,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-  fetchCurrencies,
-};
-
 class App extends Component {
-  componentDidMount() {
-    this.props.fetchCurrencies();
-  }
-
   render() {
     const { categories } = this.props;
     return (
@@ -43,7 +34,7 @@ class App extends Component {
             <ProductDescription />
           </Route>
           <Route path="/cart">
-            <Cart />
+            <CartPage />
           </Route>
           <Redirect exact from="/" to="/all" />
           <Route path="*">
@@ -54,4 +45,4 @@ class App extends Component {
     );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);

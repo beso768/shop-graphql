@@ -15,14 +15,6 @@ export const ProductSlice = createSlice({
     product: {},
     status: "",
   },
-  reducers: {
-    cleanProduct: (state, action) => {
-      return {
-        ...state,
-        product: {},
-      };
-    },
-  },
   extraReducers(builder) {
     builder.addCase(fetchProductById.pending, (state) => {
       return {
@@ -44,5 +36,5 @@ export const ProductSlice = createSlice({
     });
   },
 });
-export const { cleanProduct } = ProductSlice.actions;
+
 export const ProductReducer = ProductSlice.reducer;

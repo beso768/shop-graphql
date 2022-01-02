@@ -1,26 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setNewAttribute } from "../../state/reducers/CartSlice";
-import CartItem from "../cart/CartItem";
+import CartItem from "./CartItem";
+import { v4 as uuidv4 } from "uuid";
 
 const mapStateToProps = (state) => {
   return {
-    activeCurrency: state.CurrencyReducer.activeCurrency,
     cart: state.CartReducer,
   };
 };
-const mapDispatchToProps = {
-  setNewAttribute,
-};
-
 class Cart extends Component {
   render() {
+    const { miniSize } = this.props; //miniSize property used for menu items
     const cartItems = Object.values(this.props.cart);
     return (
       <section>
-        <h2 className="page-title">Cart</h2>
         {cartItems && cartItems.length > 0 ? (
-          cartItems.map((obj) => <CartItem data={obj} />)
+          cartItems.map((obj) => (
+            <CartItem data={obj} key={uuidv4()} miniSize={miniSize || false} />
+          ))
         ) : (
           <h1>No products.</h1>
         )}
@@ -28,4 +25,4 @@ class Cart extends Component {
     );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, null)(Cart);

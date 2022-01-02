@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import ProductInfo from "../products/ProductInfo";
-import {
-  cleanProduct,
-  fetchProductById,
-} from "./../../state/reducers/ProductSlice";
+import { fetchProductById } from "./../../state/reducers/ProductSlice";
 import Slider from "./../products/Slider";
 import NotFound from "./NotFound";
 
@@ -17,7 +14,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   fetchProductById,
-  cleanProduct,
 };
 class ProductDescription extends Component {
   constructor(props) {
@@ -30,9 +26,6 @@ class ProductDescription extends Component {
   componentDidMount() {
     // fetch product by id
     this.props.fetchProductById(this.props.match.params.id);
-  }
-  componentWillUnmount() {
-    this.props.cleanProduct();
   }
 
   render() {

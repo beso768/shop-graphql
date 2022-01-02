@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "./Cart.css";
 import { connect } from "react-redux";
-import { setNewAttribute } from "../../state/reducers/CartSlice";
+import { setNewAttribute, removeItem } from "../../state/reducers/CartSlice";
 import ItemSlider from "./ItemSlider";
 import ItemQuantity from "./ItemQuantity";
 import Price from "../Price";
-
+import Attributes from "./CartAttributes";
+import trash from "../../icons/trash.svg";
 const mapStateToProps = (state) => {
   return {
     activeCurrency: state.CurrencyReducer.activeCurrency,
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   setNewAttribute,
+  removeItem,
 };
 
 class CartItem extends Component {
@@ -37,77 +39,43 @@ class CartItem extends Component {
   }
 
   render() {
-    const { product, selectedAttributes, quantity } = this.props.data;
+    const {
+      data: { product, selectedAttributes, quantity },
+      miniSize,
+      removeItem,
+    } = this.props;
 
     return (
-      <div className="cart-item">
+      <div className={miniSize ? "menu-item-wrapper" : "cart-item"}>
         {product && (
           <>
-            <div className="left">
+            <div className={`left ${miniSize ? "menu-item" : ""}`}>
               <h3>{product.name}</h3>
               <h4>{product.brand}</h4>
               <div className="price">
                 <Price prices={product.prices} />
               </div>
-              {product.attributes.map((attribute) => (
-                <div className="attribute" key={attribute.id}>
-                  <h5>{attribute.id}</h5>
-                  {attribute.type === "swatch" ? (
-                    <div className="d-flex">
-                      {attribute.items.map((item) => (
-                        <div
-                          className="colors-wrapper"
-                          key={item.id}
-                          onClick={() =>
-                            this.selectAttribute(attribute.id, item.id)
-                          }
-                        >
-                          <div>{item.displayValue}</div>
-                          <div
-                            style={{
-                              background: item.value,
-                              filter:
-                                selectedAttributes[attribute.name] === item.id
-                                  ? "drop-shadow(black 0px 0px 5px)"
-                                  : "none",
-                            }}
-                            className="display-value colored-box"
-                          ></div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="d-flex">
-                      {attribute.items.map((item) => (
-                        <div
-                          style={
-                            selectedAttributes[attribute.name] === item.id
-                              ? {
-                                  backgroundColor: "black",
-                                  color: "white",
-                                }
-                              : {
-                                  backgroundColor: "white",
-                                  color: "black",
-                                }
-                          }
-                          className="display-value"
-                          key={item.id}
-                          onClick={() =>
-                            this.selectAttribute(attribute.id, item.id)
-                          }
-                        >
-                          <span>{item.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+              <Attributes
+                product={product}
+                selectedAttributes={selectedAttributes}
+                miniSize={miniSize}
+              />
             </div>
-            <div className="right">
-              <ItemQuantity productId={product.id} quantity={quantity} />
-              <ItemSlider gallery={product.gallery} />
+            <div className={miniSize ? "right-menu-item" : "right"}>
+              <div className="op-wrapper">
+                <ItemQuantity
+                  productId={product.id}
+                  quantity={quantity}
+                  menu={miniSize}
+                />
+                <ItemSlider gallery={product.gallery} />
+              </div>
+              <div
+                className="trash-icon"
+                onClick={() => removeItem(product.id)}
+              >
+                <img src={trash} alt={trash} />
+              </div>
             </div>
           </>
         )}

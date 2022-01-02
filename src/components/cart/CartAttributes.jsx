@@ -20,7 +20,7 @@ class Attributes extends Component {
   }
 
   render() {
-    const { product, selectedAttributes } = this.props;
+    const { product, selectedAttributes, miniSize } = this.props;
     return (
       <>
         {product &&
@@ -48,7 +48,9 @@ class Attributes extends Component {
                         style={{
                           background: item.value,
                         }}
-                        className="display-value colored-box menu"
+                        className={`display-value colored-box ${
+                          miniSize ? "menu" : ""
+                        }`}
                       ></div>
                     </div>
                   ))}
@@ -68,7 +70,7 @@ class Attributes extends Component {
                               color: "black",
                             }
                       }
-                      className="display-value menu"
+                      className={`display-value ${miniSize ? "menu" : ""}`}
                       key={item.id}
                       onClick={() =>
                         this.selectAttribute(attribute.id, item.id)

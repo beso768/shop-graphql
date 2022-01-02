@@ -1,23 +1,20 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
-import { setNewAttribute } from "../../state/reducers/CartSlice";
-import { v4 as uuidv4 } from "uuid";
-import cart from "../../icons/cart.png";
-import CartMenuItem from "./CartMenuItem";
-import "./Cart.css";
 import { Link } from "react-router-dom";
+import cart from "../../icons/cart.png";
+import { setNewAttribute, checkout } from "../../state/reducers/CartSlice";
+import Cart from "./Cart";
+import "./Cart.css";
 
 const mapStateToProps = (state) => {
   return {
-    activeCurrency: state.CurrencyReducer.activeCurrency,
     cart: state.CartReducer,
   };
 };
 const mapDispatchToProps = {
   setNewAttribute,
+  checkout,
 };
-
-const cartBox = createRef();
 
 class CartMenu extends Component {
   constructor(props) {
@@ -25,14 +22,17 @@ class CartMenu extends Component {
     this.state = {
       showMenu: false,
     };
+    this.cartBox = createRef();
     this.operCartMenu = this.operCartMenu.bind(this);
     this.closeHandler = this.closeHandler.bind(this);
   }
 
   closeHandler({ target }) {
-    if (!cartBox.current.contains(target)) {
+    if (!this.cartBox.current.contains(target)) {
       this.setState({ showMenu: false }, () =>
-        document.removeEventListener("click", this.closeHandler)
+        document.removeEventListener("click", this.closeHandler, {
+          capture: true,
+        })
       );
     }
   }
@@ -47,44 +47,45 @@ class CartMenu extends Component {
     const cartItems = Object.values(this.props.cart);
 
     return (
-      <div className="d-flex adssas" ref={cartBox}>
-        <div onClick={this.operCartMenu} className="cart-icon">
-          <img src={cart} alt="cart" />
-        </div>
-        {showMenu && (
-          <>
-            <div className="cart-menu">
-              <h5>
-                My Bag , <span>{cartItems.length} Items</span>
-              </h5>
-              <div>
-                {cartItems && cartItems.length > 0 ? (
-                  <>
-                    {cartItems.map((obj) => (
-                      <CartMenuItem data={obj} key={uuidv4()} />
-                    ))}
-                    <h5>
-                      Total , <span>{this.props.activeCurrency.symbol}</span>
-                    </h5>
-                  </>
-                ) : (
-                  <h1>No products.</h1>
-                )}
-                <div className="buttons">
-                  <Link to="/cart" className="view-bag">
-                    View Bag
-                  </Link>
-                  <button className="checkout">Checkout</button>
+      <>
+        <div className="d-flex" ref={this.cartBox}>
+          <div onClick={this.operCartMenu} className="cart-icon">
+            <img src={cart} alt="cart" />
+            {cartItems.length > 0 && (
+              <div className="icon-quantity">{cartItems.length}</div>
+            )}
+          </div>
+          {showMenu && (
+            <>
+              <div className="cart-menu">
+                <h5>
+                  My Bag , <span>{cartItems.length} Items</span>
+                </h5>
+                <div>
+                  <Cart miniSize={true} />
+                  <div className="buttons">
+                    <Link to="/cart" className="view-bag">
+                      View Bag
+                    </Link>
+                    <button
+                      className="checkout"
+                      onClick={() => this.props.checkout()}
+                      style={{ opacity: cartItems.length === 0 ? "0.5" : "1" }}
+                      disabled={cartItems.length === 0}
+                    >
+                      Checkout
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              className="cart-backdrop"
-              onClick={() => this.setState({ showMenu: false })}
-            ></div>
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+        <div
+          className="cart-backdrop"
+          style={{ display: showMenu ? "block" : "none" }}
+        ></div>
+      </>
     );
   }
 }
