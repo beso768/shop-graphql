@@ -37,9 +37,9 @@ class ProductList extends Component {
             products.map((product) => (
               <li
                 key={product.id}
-                style={{
-                  opacity: product.inStock ? "1" : "0.6",
-                }}
+                className={`product-card ${
+                  !product.inStock ? "out-of-stock" : ""
+                }`}
               >
                 <ProductCard product={product} />
               </li>

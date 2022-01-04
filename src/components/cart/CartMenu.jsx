@@ -1,13 +1,14 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import cart from "../../icons/cart.png";
+import cartImg from "../../icons/cart.png";
 import { setNewAttribute, checkout } from "../../state/reducers/CartSlice";
 import Cart from "./Cart";
 import "./Cart.css";
 
 const mapStateToProps = (state) => {
   return {
+    activeCurrency: state.CurrencyReducer.activeCurrency,
     cart: state.CartReducer,
   };
 };
@@ -24,33 +25,55 @@ class CartMenu extends Component {
     };
     this.cartBox = createRef();
     this.operCartMenu = this.operCartMenu.bind(this);
-    this.closeHandler = this.closeHandler.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
+    this.scrollHandler = this.scrollHandler.bind(this);
   }
 
-  closeHandler({ target }) {
-    if (!this.cartBox.current.contains(target)) {
+  clickHandler({ target }) {
+    if (
+      !this.cartBox.current.contains(target) ||
+      target.className === "view-bag"
+    ) {
       this.setState({ showMenu: false }, () =>
-        document.removeEventListener("click", this.closeHandler, {
-          capture: true,
-        })
+        document.removeEventListener("click", this.clickHandler)
       );
     }
+  }
+  scrollHandler() {
+    this.setState({ showMenu: false }, () =>
+      document.removeEventListener("scroll", this.scrollHandler)
+    );
   }
 
   operCartMenu() {
     this.setState((prevState) => ({ showMenu: !prevState.showMenu }));
-    document.addEventListener("click", this.closeHandler, { capture: true });
+    document.addEventListener("click", this.clickHandler);
+    document.addEventListener("scroll", this.scrollHandler);
+  }
+
+  calcTotal() {
+    const cartItems = Object.values(this.props.cart);
+    let total = 0;
+    cartItems.forEach((item) => {
+      const price = item.product.prices.find(
+        (price) => price.currency.label === this.props.activeCurrency.label
+      );
+      total += item.quantity * price.amount;
+    });
+    return total.toFixed(2);
   }
 
   render() {
     const { showMenu } = this.state;
-    const cartItems = Object.values(this.props.cart);
+    const { cart } = this.props;
+    const cartItems = Object.values(cart);
+    let total = this.calcTotal();
 
     return (
       <>
         <div className="d-flex" ref={this.cartBox}>
           <div onClick={this.operCartMenu} className="cart-icon">
-            <img src={cart} alt="cart" />
+            <img src={cartImg} alt="cart" />
             {cartItems.length > 0 && (
               <div className="icon-quantity">{cartItems.length}</div>
             )}
@@ -58,19 +81,26 @@ class CartMenu extends Component {
           {showMenu && (
             <>
               <div className="cart-menu">
-                <h5>
-                  My Bag , <span>{cartItems.length} Items</span>
+                <h5 className="menu-title">
+                  <strong>My Bag </strong>, {cartItems.length} Items
                 </h5>
                 <div>
                   <Cart miniSize={true} />
+                  <div className="total-amount">
+                    <div>Total:</div>
+                    <div>
+                      {this.props.activeCurrency.symbol} {total}
+                    </div>
+                  </div>
                   <div className="buttons">
                     <Link to="/cart" className="view-bag">
                       View Bag
                     </Link>
                     <button
-                      className="checkout"
+                      className={`checkout ${
+                        cartItems.length === 0 ? "disabled" : ""
+                      }`}
                       onClick={() => this.props.checkout()}
-                      style={{ opacity: cartItems.length === 0 ? "0.5" : "1" }}
                       disabled={cartItems.length === 0}
                     >
                       Checkout
@@ -81,10 +111,7 @@ class CartMenu extends Component {
             </>
           )}
         </div>
-        <div
-          className="cart-backdrop"
-          style={{ display: showMenu ? "block" : "none" }}
-        ></div>
+        <div className={`cart-backdrop ${showMenu ? "show" : ""}`}></div>
       </>
     );
   }

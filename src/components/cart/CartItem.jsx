@@ -68,7 +68,13 @@ class CartItem extends Component {
                   quantity={quantity}
                   menu={miniSize}
                 />
-                <ItemSlider gallery={product.gallery} />
+                {miniSize ? (
+                  <div className="cart-item-img">
+                    <img src={product.gallery[0]} alt="cart-item" />
+                  </div>
+                ) : (
+                  <ItemSlider gallery={product.gallery} />
+                )}
               </div>
               <div
                 className="trash-icon"

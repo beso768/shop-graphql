@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
+
 export default class Message extends Component {
   render() {
     const { validationErrors, success } = this.props;
@@ -9,7 +9,7 @@ export default class Message extends Component {
           <div className="errors">
             Please choose field(s) :{" "}
             {validationErrors.map((field, ind) => (
-              <strong key={uuidv4()}>
+              <strong key={ind}>
                 {field}{" "}
                 {ind === validationErrors.length - 1 ? <> . </> : <> , </>}
               </strong>

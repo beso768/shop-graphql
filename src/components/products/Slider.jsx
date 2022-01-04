@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
+
 import "./Products.css";
 export default class Slider extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class Slider extends Component {
       <div className="slider">
         <div className="image-collection">
           {gallery?.map((img, i) => (
-            <div onClick={() => this.selectImage(i)} key={uuidv4()}>
+            <div onClick={() => this.selectImage(i)} key={i}>
               <img src={img} alt={this.props.product.name} />
             </div>
           ))}

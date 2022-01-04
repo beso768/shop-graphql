@@ -16,7 +16,7 @@ class ProductCard extends Component {
               src={
                 product.id !== "jacket-canada-goosee"
                   ? product.gallery
-                  : "https://media.dior.com/couture/ecommerce/media/catalog/product/7/g/1570207502_943C449A4462_C989_E01_ZHC.jpg"
+                  : "https://images.canadagoose.com/image/upload/w_1333,c_scale,f_auto,q_auto:best/v1634058159/product-image/2409L_61_p.png"
               }
               alt={product.gallery}
             />

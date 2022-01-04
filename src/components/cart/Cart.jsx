@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CartItem from "./CartItem";
-import { v4 as uuidv4 } from "uuid";
 
 const mapStateToProps = (state) => {
   return {
@@ -15,8 +14,8 @@ class Cart extends Component {
     return (
       <section>
         {cartItems && cartItems.length > 0 ? (
-          cartItems.map((obj) => (
-            <CartItem data={obj} key={uuidv4()} miniSize={miniSize || false} />
+          cartItems.map((obj, i) => (
+            <CartItem data={obj} key={i} miniSize={miniSize || false} />
           ))
         ) : (
           <h1>No products.</h1>

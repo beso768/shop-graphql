@@ -16,15 +16,13 @@ export default class Attributes extends Component {
                   <div className="d-flex">
                     {attribute.items.map((item) => (
                       <div
-                        className="colors-wrapper"
                         key={item.id}
                         onClick={() => selectAttribute(attribute.id, item.id)}
-                        style={{
-                          filter:
-                            selectedAttributes[attribute.name] === item.id
-                              ? "drop-shadow(black 0px 0px 0px)"
-                              : "none",
-                        }}
+                        className={`colors-wrapper ${
+                          selectedAttributes[attribute.name] === item.id
+                            ? "active"
+                            : ""
+                        }`}
                       >
                         <div>{item.displayValue}</div>
                         <div
@@ -42,20 +40,13 @@ export default class Attributes extends Component {
                   <div className="d-flex">
                     {attribute.items.map((item) => (
                       <div
-                        className={`display-value ${miniSize && "menu"}`}
                         key={item.id}
                         onClick={() => selectAttribute(attribute.id, item.id)}
-                        style={
+                        className={`display-value ${miniSize ? "menu" : ""} ${
                           selectedAttributes[attribute.name] === item.id
-                            ? {
-                                backgroundColor: "black",
-                                color: "white",
-                              }
-                            : {
-                                backgroundColor: "white",
-                                color: "black",
-                              }
-                        }
+                            ? "active"
+                            : ""
+                        }`}
                       >
                         <span>{item.value}</span>
                       </div>

@@ -6,7 +6,7 @@ import cart from "../../icons/cart.png";
 import Attributes from "./Attributes";
 import Message from "./Message";
 import Price from "./../Price";
-
+import parse from "html-react-parser";
 const mapStateToProps = (state) => {
   return {
     activeCurrency: state.CurrencyReducer.activeCurrency,
@@ -100,13 +100,10 @@ class ProductInfo extends Component {
                 />
                 <button
                   onClick={this.addToCart}
-                  className={miniSize ? "add-to-cart" : "add-button"}
+                  className={`${miniSize ? "add-to-cart" : "add-button"} ${
+                    this.state.validationErrors ? "disabled" : ""
+                  }`}
                   disabled={this.state.validationErrors}
-                  style={
-                    this.state.validationErrors && {
-                      backgroundColor: "#9effb7",
-                    }
-                  }
                 >
                   {miniSize ? (
                     <img src={cart} alt="cart" />
@@ -121,9 +118,7 @@ class ProductInfo extends Component {
             <Message validationErrors={validationErrors} success={success} />
             {!miniSize && (
               <div className="description-text">
-                <div
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-                />
+                {parse(product.description)}
               </div>
             )}
           </div>

@@ -31,16 +31,16 @@ class Attributes extends Component {
                 <div className="d-flex">
                   {attribute.items.map((item) => (
                     <div
-                      style={{
-                        filter:
-                          selectedAttributes[attribute.name] === item.id
-                            ? "drop-shadow(black 0px 0px 0px)"
-                            : "none",
-                      }}
-                      className="colors-wrapper"
+                      className={`colors-wrapper ${
+                        selectedAttributes[attribute.name] === item.id
+                          ? "active"
+                          : ""
+                      }`}
                       key={item.id}
-                      onClick={() =>
-                        this.selectAttribute(attribute.id, item.id)
+                      onClick={
+                        !miniSize
+                          ? () => this.selectAttribute(attribute.id, item.id)
+                          : null
                       }
                     >
                       <div>{item.displayValue}</div>
@@ -59,21 +59,16 @@ class Attributes extends Component {
                 <div className="d-flex">
                   {attribute.items.map((item) => (
                     <div
-                      style={
+                      className={`display-value ${miniSize ? "menu" : ""} ${
                         selectedAttributes[attribute.name] === item.id
-                          ? {
-                              backgroundColor: "black",
-                              color: "white",
-                            }
-                          : {
-                              backgroundColor: "white",
-                              color: "black",
-                            }
-                      }
-                      className={`display-value ${miniSize ? "menu" : ""}`}
+                          ? "active"
+                          : ""
+                      }`}
                       key={item.id}
-                      onClick={() =>
-                        this.selectAttribute(attribute.id, item.id)
+                      onClick={
+                        !miniSize
+                          ? () => this.selectAttribute(attribute.id, item.id)
+                          : null
                       }
                     >
                       <span>{item.value}</span>

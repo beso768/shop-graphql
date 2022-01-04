@@ -132,8 +132,22 @@ header a {
   height: 24px !important;
   margin-right: 10px;
 }
+.display-value.active {
+  background-color: black;
+  color: white;
+}
+.display-value {
+  background-color: white;
+  color: black;
+}
 
 /* products */
+.product-card {
+  opacity: 1;
+}
+.product-card.out-of-stock {
+  opacity: 0.6;
+}
 .product-list {
   display: grid;
   grid-template-columns: 32% 32% 32%;
@@ -187,9 +201,6 @@ header a {
 }
 .description-text {
   margin-top: 40px;
-}
-.description {
-  overflow-y: hidden;
 }
 
 /* attributes  */

@@ -12,16 +12,8 @@ const mapDispatchToProps = {
 };
 
 class ItemQuantity extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     quantity: 1,
-  //   };
-  //   this.handleClick = this.handleClick.bind(this);
-  // }
   handleClick(sign) {
     const { productId, setItemQuantity } = this.props;
-
     if (sign === "+") {
       setItemQuantity({ productId, type: "increment" });
     } else {

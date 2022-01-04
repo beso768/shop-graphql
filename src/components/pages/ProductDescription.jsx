@@ -31,7 +31,6 @@ class ProductDescription extends Component {
   render() {
     const { loading, success, error } = this.props.status;
     const { product } = this.props;
-
     return (
       <>
         {loading ? (

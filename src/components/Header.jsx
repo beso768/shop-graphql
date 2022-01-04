@@ -64,7 +64,7 @@ class Header extends Component {
             ))}
           </ul>
         </nav>
-        <div className="logo">
+        <div className="logo" onClick={() => this.handleClick("all")}>
           <Link to="/">
             <img src={logo} alt="logo" />
           </Link>
